@@ -1,0 +1,34 @@
+name: Mise à jour des centres
+
+on:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/fetch-data.mjs
+      - name: Enregistrer si les données ont changé
+        run: |
+          # generatedAt change à chaque exécution : on ne compare que la liste des centres
+          if git diff --quiet -- data/centres.json || [ "$(git show HEAD:data/centres.json | jq -c .centres)" = "$(jq -c .centres data/centres.json)" ]; then
+            echo "Aucun changement"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Mise à jour des centres de loisirs (open data Paris)"
+          git push
+          # un push fait avec GITHUB_TOKEN ne déclenche pas d'autre workflow : on lance la publication
+          gh workflow run pages.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
