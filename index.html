@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notre centre de loisirs</title>
+  <meta name="description" content="Notez les centres de loisirs de Paris : avis des parents, activités, événements.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭐</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">⭐</span>
+      <div>
+        <h1>Notre centre de loisirs</h1>
+        <p class="tagline">Les parents parisiens notent les centres de loisirs</p>
+      </div>
+    </div>
+    <button class="ghost" id="about-btn" type="button">Comment ça marche ?</button>
+  </header>
+
+  <div id="mode-banner" class="banner" hidden></div>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="filters">
+        <input id="search" type="search" placeholder="Rechercher une école, une rue…" aria-label="Rechercher">
+        <div class="filter-row">
+          <select id="arr" aria-label="Arrondissement"><option value="">Tous les arrondissements</option></select>
+          <select id="type" aria-label="Type">
+            <option value="">Maternelle et élémentaire</option>
+            <option value="maternelle">Maternelle (3-6 ans)</option>
+            <option value="elementaire">Élémentaire (6-11 ans)</option>
+          </select>
+        </div>
+        <div class="filter-row">
+          <select id="sort" aria-label="Trier">
+            <option value="arr">Trier par arrondissement</option>
+            <option value="best">Mieux notés d'abord</option>
+            <option value="most">Plus d'avis d'abord</option>
+            <option value="near">Plus proches de moi</option>
+          </select>
+          <span id="count" class="count"></span>
+        </div>
+      </div>
+      <ul id="list" class="list" aria-live="polite"></ul>
+    </aside>
+
+    <section class="map-wrap">
+      <div id="map" aria-label="Carte des centres de loisirs"></div>
+    </section>
+
+    <section id="detail" class="detail" hidden aria-modal="true" role="dialog"></section>
+  </main>
+
+  <dialog id="about">
+    <form method="dialog" class="about">
+      <h2>Comment ça marche ?</h2>
+      <p>À Paris, les <strong>centres de loisirs</strong> (mercredis et vacances scolaires) sont accueillis
+        dans les écoles maternelles et élémentaires publiques. Le référentiel des
+        <span id="about-count">693</span> centres provient de l'<a href="https://opendata.paris.fr/explore/dataset/lieux-municipaux/" target="_blank" rel="noopener">open data de la Ville de Paris</a>.</p>
+      <p>Pendant les vacances, plusieurs centres sont souvent regroupés dans une seule école :
+        vérifiez le lieu d'accueil sur le <a href="https://www.paris.fr/pages/centres-de-loisirs-2084" target="_blank" rel="noopener">site de la Ville</a>.</p>
+      <h3>Trois façons de donner son avis</h3>
+      <ol>
+        <li><strong>⭐ Noter le centre</strong> — une note globale de 1 à 5 étoiles, et si vous le souhaitez
+          une note par critère : encadrement, activités, locaux &amp; sécurité, communication avec les parents.
+          Un avis par famille et par centre, modifiable à tout moment.</li>
+        <li><strong>🎨 Voter pour les activités</strong> — proposez une activité vécue ou souhaitée
+          (sortie au musée, atelier cuisine…) et votez 👍 / 👎 pour celles des autres.</li>
+        <li><strong>📣 Signaler un événement</strong> — un super moment, une information utile ou un problème
+          (retard, sortie annulée…). Les autres parents peuvent dire « moi aussi ».</li>
+      </ol>
+      <p class="muted">Pas de compte : un identifiant anonyme est conservé dans votre navigateur pour éviter les doubles votes.
+        Restez bienveillant·e : pas de nom d'animateur ni d'enfant.</p>
+      <div class="actions"><button class="primary" value="close">J'ai compris</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="config.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
