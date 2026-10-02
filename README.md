@@ -49,4 +49,4 @@ python3 -m http.server 8080   # puis http://localhost:8080
 ```
 
 Site 100 % statique (HTML, CSS, JavaScript sans build) ; carte avec [Leaflet](https://leafletjs.com)
-et les fonds OpenStreetMap. Le workflow `pages.yml` publie la branche `main` sur la branche `gh-pages`.
+et les fonds OpenStreetMap. Le workflow `pages.yml` publie la branche `main` sur GitHub Pages via GitHub Actions.
